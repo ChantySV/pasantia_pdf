@@ -6,6 +6,7 @@ const conexion = mysql.createConnection({
     password: '2104',
     database: 'repositorio'
 })
+
 conexion.connect(function(err) {
     if(err){
         throw err;
