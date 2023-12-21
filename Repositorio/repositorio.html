@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorio de PDF</title>
+    <link rel="stylesheet" href="repositorio.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="hero">
+        <nav>
+            <h2 class="logo">UP<span>DS</span></h2>
+            <ul>
+                <li><a href="#">Titulo</a></li>
+                <li><a href="#">Autor</a></li>
+                <li><a href="#">Carreras</a></li>
+                <li><a href="#">Año</a></li>
+                <li><a href="#">Búsqueda Avanzada</a></li>
+            </ul>
+            <button type="button">Ingresar</button>
+        </nav>
+
+        <section class="pdf-list">
+            <h3>Archivos PDF Recientes</h3>
+            <ul id="contenedor">
+            </ul>
+        </section>
+
+        <div id="pdfPreview"></div>
+
+        <footer>
+        
+            <p>Contactanos</p>
+          </footer>
+    </div>
+
+    
+    <script>
+        function showPDFPreview(url) {
+            const container = document.getElementById('pdfPreview');
+            container.innerHTML = '';
+
+            const loadingTask = pdfjsLib.getDocument(url);
+            loadingTask.promise.then(function (pdf) {
+                pdf.getPage(1).then(function (page) {
+                    const scale = 0.5;
+                    const viewport = page.getViewport({ scale: scale });
+
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+
+                    page.render(renderContext).promise.then(function () {
+                        container.appendChild(canvas);
+                    });
+                });
+            }).catch(function (error) {
+                console.log('Error al cargar el PDF:', error);
+            });
+        }
+
+        const pdfLinks = document.querySelectorAll('.pdf-list a[data-pdf]');
+        pdfLinks.forEach(function (link) {
+            link.addEventListener('mouseover', function (event) {
+                event.preventDefault();
+                const pdfUrl = this.getAttribute('data-pdf');
+                showPDFPreview(pdfUrl);
+            });
+
+            link.addEventListener('mouseout', function () {
+                const container = document.getElementById('pdfPreview');
+                container.innerHTML = '';
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
