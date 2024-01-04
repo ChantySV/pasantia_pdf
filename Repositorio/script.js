@@ -7,7 +7,7 @@ const cargaDocumentos = (datos) => {
     const nombreArchivo = dato.ruta_pdf.split('\\').pop();
     console.log(nombreArchivo);
     resultadoDocumentos +=
-      `<li><a href="../uploads/${nombreArchivo}" target="_blank">${dato.titulo}</a></li>`;
+      `<li><a href="../uploads/${nombreArchivo}" target="_blank" class="link">${dato.titulo}</a> </li>`;
   });
   contenedor.innerHTML = resultadoDocumentos;
 };
