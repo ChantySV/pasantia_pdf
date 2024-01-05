@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-exports.uploadPDF = upload.single("ruta_pdf");
+exports.uploadPDF = upload.single("pdf");
 
 exports.uploadFile = (req, res) => {
   res.send({ data: "Enviar un archivo" });

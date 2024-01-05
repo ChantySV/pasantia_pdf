@@ -17,13 +17,14 @@ documentos.post = (req, res) => {
         res.status(400).json({ error: "No se ha subido ningún archivo" });
         return;
       }
+
   let data = [
     req.body.tipo,
     req.body.facultad,
     req.body.carrera,
     req.body.titulo,
     req.body.autor,
-    req.body.año,
+    req.body.anho,
     req.body.sede,
     req.file.path
   ];
@@ -36,7 +37,7 @@ documentos.post = (req, res) => {
       return;
     }
     res.json(result);
-    console.log('Se añadió correctamente');
+    console.log(data);
   });
 };
 
